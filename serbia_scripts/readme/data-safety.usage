@@ -1,0 +1,13 @@
+from data_safety import safe_rename
+
+# Example usage within another script
+source_file = '/path/to/source/file.csv'
+destination_file = '/path/to/destination/file.csv'
+
+# Instead of using os.rename directly, use safe_rename from the data-safety.py script
+new_path = safe_rename(source_file, destination_file)
+
+if new_path:
+    print(f"File successfully renamed to {new_path}")
+else:
+    print("Rename operation was not performed.")

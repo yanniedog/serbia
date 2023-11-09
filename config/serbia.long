@@ -1,0 +1,61 @@
+[DEFAULT]
+# The location of this config file is: /home/pi/serbia/config/serbia.cfg
+
+# Credentials for logging in
+username = jkokavec@gmail.com
+password = Jwm^Z7Y%%(kt
+
+# Paths configuration
+base_directory = /home/pi/serbia
+script_directory = base_directory/scripts
+incomplete_csv_directory = base_directory/settlement_csvs
+completed_csv_directory = base_directory/completed_csvs
+downloaded_images_directory = base_directory/images
+log_file_directory = base_directory/logs
+individual-csv-logs_directory = base_directory/logs/individual-csv-logs/
+overall_log_path = base_directory/logs/overall-log/overall-log.csv
+library_path = base_directory/library/library.xlsx
+geckodriver_log_path = base_directory/logs/geckodriver_logs/geckodriver.log
+
+# Script name prefix (script names must start with this)
+prefix_session_download = multidownload
+prefix_redistribution = redistribute
+prefix_datasafety = datasafety
+prefix_killtmux = killtmux
+prefix_makesettlement_csvs = makesettlement
+prefix_cleanzero = cleanzero
+prefix_make_multiple_settlement_csvs_directories = mmcsvdirs
+prefix_strip___script = strip___tail-off
+
+# Naming conventions
+subdirectory_structure_for_downloaded_images = downloaded_images_directory/settlement/year/religion/state/
+saved_image_filename_structure = settlement-year-religion-state-image_no.jpg
+
+# Selenium driver configuration
+login_url = https://maticneknjige.org.rs/wp-login.php
+geckodriver_path = /usr/local/bin/geckodriver
+browser_options = -headless
+selenium_timeout = 30
+
+# Other configurations
+use_latest_scripts = yes
+use_datasafety_script = yes
+
+# Session config
+chunk_size = 32768
+max_restarts = 100
+session_verbose_output = yes
+session_colourful_output = yes
+run_sessionstats = yes
+
+# Launcher config
+launcher_newsession_interval = 60  #seconds
+launcher_first_pkills_firefox = yes
+launcher_first_pkills_multidownload = yes
+launcher_first_shows_discspace = yes
+launcher_first_runs_redistribute = yes
+launcher_loads_htop_in_tmux = yes
+launcher_show_discspace = yes
+launcher_show_systemstats = yes
+launcher_show_sessionstats = yes
+run_killtmux_script_on_exception_or_ctrlc = yes

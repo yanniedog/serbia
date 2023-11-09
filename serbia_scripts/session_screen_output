@@ -1,0 +1,90 @@
+from colorama import Fore, Back, Style, init
+import configparser
+import time
+from calculate_ETA import calculate_eta  # Import the calculate_eta function
+from colour_output import calculate_color, color_text
+
+# Initialize colorama
+init(autoreset=True)
+
+# Read the configuration file
+config = configparser.ConfigParser()
+config.read('/home/pi/serbia/config/serbia.cfg')
+
+# Get verbosity, color, and URL_structure settings from the config file
+VERBOSE = config.getboolean('DEFAULT', 'verbose', fallback=True)
+COLORED_OUTPUT = config.getboolean('DEFAULT', 'colour', fallback=True)
+URL_STRUCTURE = config.get('DEFAULT', 'url_structure', fallback='')
+SESS_STAT_ENABLED = config.getboolean('DEFAULT', 'sess_stat', fallback=False)  # Check if sess_stat is enabled
+
+# Set the verbosity of output based on the config file
+if VERBOSE:
+    def print_colored_message(message, color=Fore.WHITE):
+        if COLORED_OUTPUT:
+            print(f"{color}{message}{Style.RESET_ALL}")
+        else:
+            print(message)
+
+    def print_status_with_color(session_number, message, status, current_progress=None, total_progress=None,
+                                religion_weight=1, year_weight=1, state_weight=1, overall_weight=4):
+        religion_color, year_color, state_color, overall_color = calculate_color(
+            religion_weight, year_weight, state_weight, overall_weight)
+
+        if COLORED_OUTPUT:
+            if status == 'Downloaded':
+                status_color = Fore.GREEN
+            elif status == 'Exists':
+                status_color = Fore.YELLOW
+            elif status == 'Not Found':
+                status_color = Fore.RED
+            else:
+                status_color = Fore.WHITE
+
+            if current_progress is not None and total_progress is not None:
+                eta = calculate_eta(current_progress, total_progress)  # Calculate ETA
+                message = f"[#{session_number}]: {message} - Religion: {color_text(religion_color, religion_weight)} " \
+                          f"{status_color}{status}{Style.RESET_ALL} - Year: {color_text(year_color, year_weight)} " \
+                          f"- State: {color_text(state_color, state_weight)} - Overall: {color_text(overall_color, overall_weight)} - ETA: {eta}"
+            else:
+                message = f"[#{session_number}]: {message} - Religion: {color_text(religion_color, religion_weight)} " \
+                          f"{status_color}{status}{Style.RESET_ALL} - Year: {color_text(year_color, year_weight)} " \
+                          f"- State: {color_text(state_color, state_weight)} - Overall: {color_text(overall_color, overall_weight)}"
+        if VERBOSE:
+            print(message)
+
+    def print_exception_with_color(session_number, e):
+        if COLORED_OUTPUT:
+            message = f"[#{session_number}]: Exception: {Fore.RED}{str(e)}{Style.RESET_ALL}"
+        else:
+            message = f"[#{session_number}]: Exception: {str(e)}"
+        if VERBOSE:
+            print(message)
+else:
+    # Define empty functions when verbose is set to 'no' in the config
+    def print_colored_message(message, color=Fore.WHITE):
+        pass
+
+    def print_status_with_color(session_number, message, status, current_progress=None, total_progress=None,
+                                religion_weight=1, year_weight=1, state_weight=1, overall_weight=4):
+        pass
+
+    def print_exception_with_color(session_number, e):
+        pass
+
+# Additional code to read other dynamic settings from the config file
+# You can add code here to read and use other settings as needed
+
+# Check if sess_stat is enabled in the config file
+if SESS_STAT_ENABLED:
+    # Import and call the session_activity_monitor script
+    from session_activity_monitor import monitor_session_activity
+
+    # Replace 'your_session_id', 'your_network_interface', and 'your_disk_name' with actual values
+    session_id = "your_session_id"
+    network_interface = "your_network_interface"
+    disk_name = "your_disk_name"
+
+    monitor_session_activity(session_id, network_interface, disk_name)
+else:
+    # Session activity monitoring is not enabled in the config file
+    print("Session activity monitoring is disabled.")
