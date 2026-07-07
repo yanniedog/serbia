@@ -1,0 +1,10 @@
+colorama
+pandas
+numpy
+requests
+selenium
+tabulate
+psutil
+openpyxl
+beautifulsoup4
+webdriver-manager
