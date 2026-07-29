@@ -1,4 +1,7 @@
 import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import time
 import pandas as pd
 import requests
@@ -10,8 +13,21 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from datetime import datetime
-import sys
 import csv
+
+from serbia_scripts.config import (
+    USERNAME,
+    PASSWORD,
+    LOGIN_URL,
+    CHUNK_SIZE,
+    OVERALL_LOG_PATH,
+    MAX_RESTARTS,
+    CSV_DIRECTORY_BASE,
+    LOCAL_IMAGE_BASE_PATH_BASE,
+    LOG_FILE_PATH_BASE,
+    COMPLETED_CSV_DIRECTORY_BASE,
+    GECKODRIVER_PATH,
+)
 
 # Helper function to print messages with session number
 def print_with_session_number(session_number, message):
@@ -137,10 +153,10 @@ def get_row_weight(row):
 
 # Main function to process CSVs and download images
 def process_images(session_number, session, browser):
-    CSV_DIRECTORY = f'/home/pi/serbia/settlement_csvs/settlement_csvs{session_number}'
-    LOCAL_IMAGE_BASE_PATH = f'/pi/serbia/downloaded_images/downloaded_images{session_number}'
-    LOG_FILE_PATH = f'/home/pi/serbia/logs/logs{session_number}/images_not_found.csv'
-    COMPLETED_CSV_DIRECTORY = f'/home/pi/serbia/completed_csvs/completed_csvs{session_number}'
+    CSV_DIRECTORY = f'{CSV_DIRECTORY_BASE}/settlement_csvs{session_number}'
+    LOCAL_IMAGE_BASE_PATH = os.path.join(LOCAL_IMAGE_BASE_PATH_BASE, f'downloaded_images{session_number}')
+    LOG_FILE_PATH = f'{LOG_FILE_PATH_BASE}{session_number}/images_not_found.csv'
+    COMPLETED_CSV_DIRECTORY = f'{COMPLETED_CSV_DIRECTORY_BASE}{session_number}'
     os.makedirs(LOCAL_IMAGE_BASE_PATH, exist_ok=True)
     os.makedirs(COMPLETED_CSV_DIRECTORY, exist_ok=True)
     os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
@@ -227,16 +243,8 @@ def process_images(session_number, session, browser):
             print_with_session_number(session_number, "Processing completed without any errors.")
             return True, restart_count
 
-# Constants
-USERNAME = "jkokavec@gmail.com"
-PASSWORD = "Jwm^Z7Y%(kt"
-LOGIN_URL = "https://maticneknjige.org.rs/wp-login.php"
-CHUNK_SIZE = 32768  # Chunk size set to 32 KB
-OVERALL_LOG_PATH = '/home/pi/serbia/overall-log/overall-log.csv'
-MAX_RESTARTS = 100
-
 def start_browser():
-    service = Service('/usr/local/bin/geckodriver')
+    service = Service(GECKODRIVER_PATH)
     options = Options()
     options.add_argument('-headless')
     browser = webdriver.Firefox(service=service, options=options)

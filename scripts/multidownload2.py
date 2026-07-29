@@ -111,8 +111,8 @@ def parse_image_numbers(df):
     return stats
 
 # Constants
-USERNAME = "jkokavec@gmail.com"
-PASSWORD = "Jwm^Z7Y%(kt"
+USERNAME = os.environ.get("SERBIA_USER", "")
+PASSWORD = os.environ.get("SERBIA_PASS", "")
 LOGIN_URL = "https://maticneknjige.org.rs/wp-login.php"
 CHUNK_SIZE = 32768  # Chunk size set to 32 KB
 OVERALL_LOG_PATH = '/home/pi/serbia/overall-log/overall-log.csv'

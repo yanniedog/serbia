@@ -23,8 +23,8 @@ else:
         session_number = "1"
 
 # Constants
-USERNAME = "jkokavec@gmail.com"
-PASSWORD = "Jwm^Z7Y%(kt"
+USERNAME = os.environ.get("SERBIA_USER", "")
+PASSWORD = os.environ.get("SERBIA_PASS", "")
 LOGIN_URL = "https://maticneknjige.org.rs/wp-login.php"
 CSV_DIRECTORY = f'/home/pi/serbia/excel/settlement_csvs{session_number}'
 LOCAL_IMAGE_BASE_PATH = f'downloaded_images{session_number}'

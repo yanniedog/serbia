@@ -1,7 +1,10 @@
 import os
 import requests
 from urllib.parse import urlparse, unquote
+from urllib3.util import Retry
+from requests.adapters import HTTPAdapter
 from serbia_scripts.utils import print_with_session_number, print_exception
+from serbia_scripts.colour_output import print_status_with_color
 
 def handle_image(url, local_path, session, session_number, CHUNK_SIZE):
     try:
