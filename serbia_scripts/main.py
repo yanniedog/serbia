@@ -1,5 +1,6 @@
 from serbia_scripts.config import (
     USERNAME,
+    require_credentials,
     PASSWORD,
     CSV_DIRECTORY_BASE,
     LOCAL_IMAGE_BASE_PATH_BASE,
@@ -43,6 +44,7 @@ from selenium.webdriver.common.by import By
 init(autoreset=True)
 
 if __name__ == "__main__":
+    require_credentials()
     session_number = sys.argv[1] if len(sys.argv) > 1 else 'default'
     restart_count = 0
 
@@ -91,8 +93,8 @@ if __name__ == "__main__":
             if all_status_assigned:
                 renamed_csv = rename_completed_csv(csv_path, COMPLETED_CSV_DIRECTORY, stats, session_number, restart_count, duration)
                 write_to_overall_log(OVERALL_LOG_PATH, [
-                    renamed_csv, datetime.now().strftime('%Y%m%d__%H%M%S'), stats['smallest_image'],
-                    stats['largest_image'], stats['digit_format'], stats['dup_status'], stats['late_start'],
+                    renamed_csv, datetime.now().strftime('%Y%m%d__%H%M%S'),
+                    f"{stats['smallest_image']}-{stats['largest_image']}", stats['digit_format'], stats['dup_status'], stats['late_start'],
                     stats['gaps_found'], stats['total_images'], stats['existing_images'], stats['saved_images'],
                     session_number, duration, restart_count
                 ], session_number)

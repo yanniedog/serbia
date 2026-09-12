@@ -47,3 +47,8 @@ CHUNK_SIZE = config.getint('DEFAULT', 'chunk')
 MAX_RESTARTS = config.getint('DEFAULT', 'restarts')
 LOGIN_URL = config.get('DEFAULT', 'login')
 SELENIUM_TIMEOUT = config.getint('DEFAULT', 'timeout', fallback=10)
+
+
+def require_credentials():
+    if not USERNAME.strip() or not PASSWORD.strip():
+        raise ValueError('Set SERBIA_USER and SERBIA_PASS or provide credentials in a local config before downloading.')

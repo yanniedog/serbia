@@ -17,6 +17,7 @@ import csv
 
 from serbia_scripts.config import (
     USERNAME,
+    require_credentials,
     PASSWORD,
     LOGIN_URL,
     CHUNK_SIZE,
@@ -251,6 +252,7 @@ def start_browser():
     return browser
 
 if __name__ == "__main__":
+    require_credentials()
     session_number = int(sys.argv[1])
 
     init_overall_log(OVERALL_LOG_PATH)
