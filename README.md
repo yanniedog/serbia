@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ```
 
 Install Firefox and [geckodriver](https://github.com/mozilla/geckodriver/releases)
-for your CPU architecture, then put geckodriver on `PATH` (or set `gecko` in config).
+for your CPU architecture. Set `gecko` in your local config to the executable path; the template defaults to `/usr/local/bin/geckodriver`. Putting it elsewhere on `PATH` alone does not override that configured path.
 
 ## Configure credentials
 

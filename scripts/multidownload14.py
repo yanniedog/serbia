@@ -153,7 +153,7 @@ def get_row_weight(row):
 
 # Main function to process CSVs and download images
 def process_images(session_number, session, browser):
-    CSV_DIRECTORY = f'{CSV_DIRECTORY_BASE}/settlement_csvs{session_number}'
+    CSV_DIRECTORY = f'{CSV_DIRECTORY_BASE}{session_number}'
     LOCAL_IMAGE_BASE_PATH = os.path.join(LOCAL_IMAGE_BASE_PATH_BASE, f'downloaded_images{session_number}')
     LOG_FILE_PATH = f'{LOG_FILE_PATH_BASE}{session_number}/images_not_found.csv'
     COMPLETED_CSV_DIRECTORY = f'{COMPLETED_CSV_DIRECTORY_BASE}{session_number}'

@@ -23,7 +23,7 @@ def log_image_not_found(url, log_file_path, session_number):
         log_file.write(f"{datetime.now().strftime('%Y%m%d-%H:%M:%S')},{url}\n")
 
 def process_images(csv_path, session, session_number, CHUNK_SIZE, LOG_FILE_PATH, LOCAL_IMAGE_BASE_PATH):
-    all_status_assigned = True
+    all_status_assigned = False
     df = None
     try:
         df = pd.read_csv(csv_path)
