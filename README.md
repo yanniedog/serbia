@@ -6,10 +6,12 @@ Designed to run on a Raspberry Pi (or any Linux host) with Firefox + geckodriver
 
 ## Clone locally
 
+Use Python 3.11 or newer; the pinned dependencies do not support Python 3.10.
+
 ```bash
 git clone https://github.com/yanniedog/serbia.git
 cd serbia
-python3 -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
