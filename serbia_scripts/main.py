@@ -37,6 +37,7 @@ import os
 import requests
 import time
 from datetime import datetime
+from selenium.webdriver.common.by import By
 
 # Initialize colorama
 init(autoreset=True)
@@ -85,7 +86,7 @@ if __name__ == "__main__":
         for csv_file in csv_files:
             csv_path = os.path.join(CSV_DIRECTORY, csv_file)
             start_time = time.time()
-            df, all_status_assigned = process_images(csv_path, session, session_number, CHUNK_SIZE, LOG_FILE_PATH, LOCAL_IMAGE_BASE_PATH)
+            stats, all_status_assigned = process_images(csv_path, session, session_number, CHUNK_SIZE, LOG_FILE_PATH, LOCAL_IMAGE_BASE_PATH)
             duration = int(time.time() - start_time)
             if all_status_assigned:
                 renamed_csv = rename_completed_csv(csv_path, COMPLETED_CSV_DIRECTORY, stats, session_number, restart_count, duration)

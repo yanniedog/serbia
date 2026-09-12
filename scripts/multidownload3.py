@@ -11,8 +11,8 @@ from datetime import datetime, timedelta
 import shutil
 
 # Constants
-USERNAME = "jkokavec@gmail.com"
-PASSWORD = "Jwm^Z7Y%(kt"
+USERNAME = os.environ.get("SERBIA_USER", "")
+PASSWORD = os.environ.get("SERBIA_PASS", "")
 LOGIN_URL = "https://maticneknjige.org.rs/wp-login.php"
 CHUNK_SIZE = 32768  # Chunk size set to 32 KB
 MAX_FAILS = 1  # Maximum number of consecutive fails before skipping to next 'state'

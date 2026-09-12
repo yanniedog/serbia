@@ -12,6 +12,9 @@ import sys
 import csv
 import logging
 
+USERNAME = os.environ.get("SERBIA_USER", "")
+PASSWORD = os.environ.get("SERBIA_PASS", "")
+
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='(#{session_number}): %(asctime)s - %(levelname)s - %(message)s')
 

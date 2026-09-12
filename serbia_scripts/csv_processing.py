@@ -1,11 +1,30 @@
+import os
 import pandas as pd
 import csv
 from datetime import datetime
+from urllib.parse import urlparse, unquote
 from serbia_scripts.image_processing import handle_image, parse_image_numbers, update_status_and_save_csv
 from serbia_scripts.utils import print_with_session_number, print_exception, ensure_dir
 
+def get_row_weight(row):
+    weight = 1
+    for attr in ['religion', 'year', 'state']:
+        weight *= row[f"{attr}_weight"]
+    return weight
+
+def update_weights(df, index):
+    for attr in ['religion', 'year', 'state']:
+        weight_column = f"{attr}_weight"
+        df.at[index, weight_column] += 1
+    return df
+
+def log_image_not_found(url, log_file_path, session_number):
+    with open(log_file_path, 'a') as log_file:
+        log_file.write(f"{datetime.now().strftime('%Y%m%d-%H:%M:%S')},{url}\n")
+
 def process_images(csv_path, session, session_number, CHUNK_SIZE, LOG_FILE_PATH, LOCAL_IMAGE_BASE_PATH):
-    all_status_assigned = True
+    all_status_assigned = False
+    df = None
     try:
         df = pd.read_csv(csv_path)
         if 'Status' not in df.columns:
@@ -45,7 +64,20 @@ def process_images(csv_path, session, session_number, CHUNK_SIZE, LOG_FILE_PATH,
     except Exception as e:
         print_exception(session_number, e)
 
-    stats = parse_image_numbers(df, session_number)
+    if df is not None:
+        stats = parse_image_numbers(df, session_number)
+    else:
+        stats = {
+            'smallest_image': None,
+            'largest_image': None,
+            'digit_format': 'unknown',
+            'dup_status': 'nodups',
+            'late_start': False,
+            'gaps_found': False,
+            'total_images': 0,
+            'existing_images': 0,
+            'saved_images': 0
+        }
     return stats, all_status_assigned
 
 def init_overall_log(log_file_path, session_number):

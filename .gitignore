@@ -1,0 +1,38 @@
+# Local secrets and overrides
+config/serbia.local.cfg
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.envrc
+
+# Logs and runtime artifacts
+*.log
+geckodriver.log
+logs/
+downloaded_images*/
+settlement_csvs*/
+completed_csvs*/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Backups and archives (do not commit)
+*.bak
+*.tar.gz
+*.tar.gz.*
+*.zip
+
+# Selenium / browser dumps
+core
+*.core

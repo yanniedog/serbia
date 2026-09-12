@@ -8,8 +8,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
 
 # Constants
-USERNAME = "jkokavec@gmail.com"
-PASSWORD = "Jwm^Z7Y%(kt"
+USERNAME = os.environ.get("SERBIA_USER", "")
+PASSWORD = os.environ.get("SERBIA_PASS", "")
 LOGIN_URL = "https://maticneknjige.org.rs/wp-login.php"
 CSV_DIRECTORY = 'settlement_csvs'
 LOCAL_IMAGE_BASE_PATH = 'downloaded_images'
