@@ -33,3 +33,10 @@ command-line Selenium + `requests` scripts originally run on a Raspberry Pi.
   logged-in cookies. Login form field ids: `user_login`, `user_pass`, `wp-submit`.
 - Historical sample CSV under `library/` may reference scans that no longer exist
   on the remote server; the downloader marks missing rows as `N`.
+
+### Verified local checks
+- Use Python 3.11 or newer for the pinned dependency set.
+- After installing requirements, import the preferred modules with: `python -c "import serbia_scripts.main"`.
+- The historical `serbia_scripts/launcher.py` has a pre-existing syntax error; do not describe all legacy scripts as verified.
+- No authenticated portal download was exercised during setup verification.
+
